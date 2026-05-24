@@ -1,1 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gussing Game</title>
+</head>
+<style>
+    body{
+        margin: 0;
+    }
+    h1{
+        text-align: center;
+        font-size: 4rem;
+    }
+    p{
+        font-size: 2rem;
+        text-align: center;
+    }
+    #theNum{
+        text-align: center;
+        font-size: 1.8rem;
 
+    }
+    .div{
+        text-align: center;
+    }
+    #input{
+        font-size: 2rem;
+    }
+    button{
+        font-size: 2rem;
+    }
+
+</style>
+<body>
+    <h1>Number Gussing Game</h1>
+    <p>Guess number between 1 to 100.</p>
+    <h2 id="theNum">**</h2>
+    <p id="numOfGuess">Guesses : 0</p>
+    <p id="msg"></p>
+    <div class="div">
+    <input type="number" id="input" placeholder="Enter your guess">
+    <button onclick="guessed()">Submit</button>
+    </div>
+    
+
+
+
+    <script>
+
+        const min = 1;
+        const max = 100
+        const computerNum  = Math.floor(Math.random() *(max - min) - min);
+        const guesses = document.getElementById("numOfGuess");
+        let numOfGuess = 0;
+        
+
+        function guessed(){
+            const input = Number(document.getElementById("input").value);
+            const msg = document.getElementById("msg");
+            const theNum = document.getElementById("theNum");
+            
+            if(input > max || input < min){
+                msg.textContent = `Out Of Range! Please Guess a Number Between ${min} and ${max}`;
+            }
+            else{
+                switch(true){
+                    case (input > computerNum):
+                        msg.textContent = "Too High Try Again!";
+                        numOfGuess ++;
+                        guesses.textContent = `Guesses : ${numOfGuess}`
+                        break;
+                    case (input < computerNum):
+                        msg.textContent = "Too Low Try Again!";
+                        numOfGuess ++;
+                        guesses.textContent = `Guesses : ${numOfGuess}`
+                        break;
+                    case (input === computerNum):
+                        msg.textContent = "YOU WON!";
+                        theNum.textContent = `The Number is ${computerNum}`;
+                        break;
+
+            }
+            }
+            
+
+        }
+
+    </script>
+</body>
+</html>

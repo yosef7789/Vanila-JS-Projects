@@ -1,0 +1,18 @@
+
+body{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#numDisplay{
+    font-size: 8rem;
+    text-align: center;
+    margin: 20px 15px;
+
+}
+.btn{
+    text-align: center;
+}
+.btns{
+    font-size: 30px;
+    margin: 0px 3px;
+}

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temp Conversion</title>
+</head>
+<style>
+    body{
+        margin: 10px;
+    }
+    #card{
+        display: flex;
+        flex-direction: column;
+        width: 70vw;
+        height: 55vh;
+        align-items: center;
+        margin: auto;
+        box-shadow: 5px 5px 15px hsla(0, 0%, 0%, 0.5);
+        
+    }
+    h1{
+        font-size: 2.5rem;
+        color: rgb(40, 148, 255);
+    }
+    #input{
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 20px;
+        padding: 5px;
+        width: 80%;
+    }
+    #radiobtns{
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+    button{
+        font-size: 2rem;
+        margin-top: 10px;
+    }
+    h2{
+        font-size: 2rem;
+        font-weight: bold;
+        color: rgb(40, 148, 255);
+        
+    }
+
+        
+
+</style>
+
+
+
+<body>
+
+    <div id="card">
+        <h1>Temperature Conversion</h1>
+
+        <input type="text" placeholder="Enter Temperature" id="input">
+
+    <div id="radiobtns">
+
+        <div>
+            <input type="radio" name="radiobtn" id="CtoF">
+            <label for="CtoF">Celsius  ➡️ Fahrenheit</label>
+        </div>
+
+        <div>
+            <input type="radio" name="radiobtn" id="FtoC">
+            <label for="FtoC">Fahrenheit ➡️ Celsius</label>
+        </div>
+
+        <div>
+            <input type="radio" name="radiobtn" id="CtoK">
+            <label for="CtoK">Celsius ➡️ Kelvin</label>
+        </div>
+
+    </div>
+
+        <button onclick="tempConvert()">Submit</button>
+
+        <h2 id="result"></h2>
+
+    </div>
+
+
+    <script>
+        
+        const toFaharenheit = document.getElementById("CtoF");
+        const toCelsius = document.getElementById("FtoC");
+        const toKelvin = document.getElementById("CtoK");
+        const result = document.getElementById("result");
+
+
+        function tempConvert(){
+
+            const input = Number(document.getElementById("input").value);
+
+            if(input == "" || isNaN(input)){
+                result.textContent = "Please Enter Temprature!"
+
+            }
+            else{
+
+            if(toFaharenheit.checked){
+                let temp = input * (9/5) + 32 
+                result.textContent = `${temp.toFixed(2)}ºF`
+                
+
+            }
+            else if(toCelsius.checked){
+                let temp = (input - 32) * 5/9 
+                result.textContent = `${temp.toFixed(2)}ºC`
+
+            }
+            else if(toKelvin.checked){
+                let temp = (input + 273.15)
+                result.textContent = `${temp.toFixed(2)}K`
+
+            }
+            else{
+                result.textContent = "please select a unit conversion"
+            }
+        }
+            }
+
+            
+    </script>
+    
+</body>
+</html>

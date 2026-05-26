@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Roller</title>
+</head>
+<style>
+    body{
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        text-align: center;
+    }
+    h1{
+        font-size: 4rem;
+        margin: 20px;
+    }
+    #label{
+        text-align: left;
+        font-size: 1.5rem;
+        
+    }
+    #input{
+        font-size: 1.3rem;
+        text-align: center;
+        padding: 5px;
+    }
+    button{
+        font-size: 1.3rem;
+         padding: 5px;
+    }
+    #img{
+        
+    }
+
+</style>
+
+
+<body>
+    <h1>Dice Roller</h1>
+    <label for="input" id="label">Number Of Dice</label>
+    <input type="number" id="input" min="1" max="6" value="1">
+    <button onclick="rollDice()">Roll Dice</button>
+    <h2 id="result"></h2>
+    <div id="img"></div>
+</body>
+
+
+<script>
+    
+
+
+    function rollDice(){
+        const input = document.getElementById("input").value;
+        const result = document.getElementById("result");
+        const img = document.getElementById("img");
+        let dices = [];
+        let imgs = [];
+
+
+
+        for(let i = 1; i <= input;i++){
+            let dice = Math.floor(Math.random() * 6 ) + 1;
+            dices.push(dice)
+            imgs.push(`<img src="Vanilla JS projects/dice roller/img/${dice}.png" alt="Dice ${dice}">`);
+     
+        }
+
+        result.textContent = ` Dice: ${dices.join(", ")}`;
+        img.innerHTML = imgs.join('');
+        
+        
+        
+    }
+
+
+
+</script>
+</html>

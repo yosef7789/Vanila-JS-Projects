@@ -29,7 +29,9 @@
         font-size: 1.3rem;
          padding: 5px;
     }
-    #img{
+    #img img{
+        width: 100px;
+        padding: 10px;
         
     }
 
@@ -42,6 +44,7 @@
     <input type="number" id="input" min="1" max="6" value="1">
     <button onclick="rollDice()">Roll Dice</button>
     <h2 id="result"></h2>
+    <h2 id="total"></h2>
     <div id="img"></div>
 </body>
 
@@ -54,20 +57,24 @@
         const input = document.getElementById("input").value;
         const result = document.getElementById("result");
         const img = document.getElementById("img");
+        const total1 = document.getElementById("total");
         let dices = [];
         let imgs = [];
+        let total = 0;
 
 
 
         for(let i = 1; i <= input;i++){
             let dice = Math.floor(Math.random() * 6 ) + 1;
             dices.push(dice)
-            imgs.push(`<img src="Vanilla JS projects/dice roller/img/${dice}.png" alt="Dice ${dice}">`);
+            imgs.push(`<img src="/dice roller/img/${dice}.png" alt="Dice ${dice}">`);
+            total += dice;
      
         }
 
         result.textContent = ` Dice: ${dices.join(", ")}`;
         img.innerHTML = imgs.join('');
+        total1.textContent = `Total: ${total}`
         
         
         

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Password</title>
+</head>
+<style>
+    body{
+        margin: 10px;
+    }
+    #card{
+        box-shadow: 5px 5px 10px black;
+        text-align: center;
+        width: 70vw;
+        height: 50vh;
+        margin: auto;
+    }
+    h1{
+        font-size: 3rem;
+    }
+    label{
+        font-size: 1.8rem;
+        justify-content: left;
+    }
+    slider{
+        
+    }
+    h2{
+        font-size: 2rem;
+        font-family:Arial, Helvetica, sans-serif;
+    }
+    button{
+        margin-top: 30px;
+        font-size: 1.5rem;
+    }
+    p{
+        display: inline;
+    }
+    .chkbox{
+        margin: 15px;
+    }
+    #displaypass{
+        font-size: 1.5rem;
+    }
+    
+</style>
+
+
+
+<body>
+    <div id="card">
+        <h1>Password Generator</h1>
+        <div id="label">
+            <label for="slider">Length of the password: <span id="value"></span> </label>
+            <input type="range" min="6" max="15" value="6"  id="slider">
+        </div>
+        <div class="chkbox">
+            <div>
+            <label for="lcase">Lowercase</label>
+            <input type="checkbox" id="lcase" checked>
+        </div>
+        <div>
+            <label for="ucase">Uppercase</label>
+            <input type="checkbox" id="ucase" checked>
+        </div>
+        <div>
+            <label for="num">Numbers</label>
+            <input type="checkbox" id="num" checked>
+        </div>
+        <div>
+        </div>
+        
+            <label for="symb">Symbols</label>
+            <input type="checkbox" id="symb" checked>
+        </div>
+        <button onclick="passwordGenerate(Number(slider.value),
+        ucase.checked,
+        lcase.checked,
+        num.checked,
+        symb.checked)">Generate</button>
+        
+        <input type="text" id="displaypass" readonly>
+        <button onclick="copyPassword()">📋</button>
+    </div>
+
+    
+
+
+    <script>
+
+        const slider = (document.getElementById("slider"));
+        const value = document.getElementById("value");
+        const display = document.getElementById("displaypass");
+        const ucase = document.getElementById("ucase");
+        const lcase = document.getElementById("lcase");
+        const num = document.getElementById("num");
+        const symb = document.getElementById("symb");
+        value.textContent = slider.value;
+
+
+      
+
+        function passwordGenerate(length,includeuppercase,includelowercase,includenumbers,includesymbols){
+
+            slider.addEventListener("input", () => {
+
+                value.textContent = slider.value;
+
+        });
+
+            
+
+
+
+            const lowercase = ("abcdefghijklmnopqrstuvwxyz");
+            const uppercase = ("abcdefghijklmnopqrstuvwxyz").toUpperCase();
+            const numbers = "0123456789";
+            const symbols = "~!@#$%&*?";
+
+            let allowedchars = "";
+            let password = "";
+
+            allowedchars +=  includelowercase ? lowercase : "" ;
+            allowedchars +=  includeuppercase ? uppercase : "" ; 
+            allowedchars +=  includenumbers ? numbers : "" ;  
+            allowedchars +=  includesymbols ? symbols : "" ;
+
+
+
+            if(allowedchars === ""){
+                return ' you must select atlesat one character'
+            }
+
+
+            for(let i = 0; i < length ; i++){
+                const random = Math.floor(Math.random() * allowedchars.length);
+                password += allowedchars[random];
+            }
+
+
+
+            display.value = password;
+
+        }
+
+        function copyPassword(){
+
+            const password = display.value;
+
+            navigator.clipboard.writeText(password);
+
+            alert("Password copied!");
+        }
+        
+
+        const passwordlength = Number(slider.value);
+        const includeuppercase = ucase.checked ;
+        const includelowercase = lcase.checked  ;
+        const includenumbers = num.checked  ;
+        const includesymbols = symb.checked ;
+
+
+
+
+
+    </script>
+</body>
+</html>

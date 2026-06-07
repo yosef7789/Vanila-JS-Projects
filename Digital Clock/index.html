@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="border: 2px solid black;">
+        <h2 id="time" style="text-align: center; font-size: 4rem; background-color:rgb(174, 217, 255);"></h2>
+    </div>
+
+    <script>
+
+        function UpdateTime(){
+            let date = new Date(); 
+
+
+            let hour = date.getHours();
+            const min = date.getMinutes().toString().padStart(2,0);
+            const sec = date.getSeconds().toString().padStart(2,0);
+            const milsec = date.getMilliseconds().toString().padStart(2,0);
+            const meridiem = hour >= 12 ? "PM" : "AM";
+            
+
+            hour = hour % 12 || 12 ;
+            hour = hour.toString().padStart(2,0);
+
+            document.getElementById("time").textContent =  `${hour}:${min}:${sec}:${meridiem}`
+
+        }
+        setInterval(UpdateTime,1000)
+        UpdateTime();
+
+    </script>
+    
+</body>
+</html>

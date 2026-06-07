@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="border: 2px solid black; text-align: center; padding: 10px">
+        <h1 id="watch" style="font-size: 3rem;">00:00:00</h1>
+        <div>
+            <button style="font-size: 2rem;" onclick="start()" >Start</button>
+            <button style="font-size: 2rem;" onclick="stop()">Stop</button>
+            <button style="font-size: 2rem;" onclick="reset()">Reset</button> 
+        </div>
+
+    </div>
+
+
+
+
+    <script>
+        let IsRunning = false;
+        let elapseTime = 0;
+        let Startwatch = 0;
+        let intervalId = null;
+        const watch = document.getElementById("watch");
+
+
+
+        function start(){
+            if(!IsRunning){
+                IsRunning = true;
+                intervalId = setInterval(DisplayWatch,10);
+                Startwatch = Date.now() - elapseTime;
+
+            }
+        }
+
+        function stop(){
+            if(IsRunning){
+                clearInterval(intervalId);
+                elapseTime = Date.now() - Startwatch;
+                IsRunning = false;
+
+            }
+        }
+        
+        function reset(){
+             IsRunning = false;
+             elapseTime = 0;
+             Startwatch = 0;
+             clearInterval(intervalId);
+             watch.textContent = '00:00:00';
+
+            }
+
+        function DisplayWatch(){
+            const currentTime = Date.now();
+            elapseTime = currentTime - Startwatch;
+
+
+            let min = Math.floor(elapseTime /(1000 * 60) % 60).toString().padStart(2,0);
+            let sec = Math.floor(elapseTime /(1000) % 60).toString().padStart(2,0);
+            let milsec = Math.floor((elapseTime % 1000 ) /10).toString().padStart(2,0); 
+
+            watch.textContent =  `${min}:${sec}:${milsec}`;
+
+            }
+
+
+    </script>
+</body>
+</html>

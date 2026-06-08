@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+.slider{
+    position: relative;
+    width: 60%;
+    margin: auto;
+    overflow: hidden;
+}
+.slider img{
+    width: 100%;
+    display: none;
+}
+img.showImg{
+    display: block;
+}
+.slider button{
+    position: absolute;
+    top: 45% ;
+    transform: translateY(-45%);
+    font-size: 2rem;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+}
+.next{
+    right: 0;
+}
+.prev{
+    left: 0;
+}
+</style>
+
+<body>
+    <div class="slider">
+        <div class="slides">
+            <img class="image" src="https://placehold.co/400" alt="">
+            <img class="image" src="https://placehold.co/401" alt="">
+            <img class="image" src="https://placehold.co/402" alt="">            
+        </div>
+            <button class="prev" onclick="prevSlide()">⟨</button>
+            <button class="next" onclick="nextSlide()">⟩</button>
+    </div>
+    
+
+
+    <script>
+        const imgs = document.querySelectorAll(".slides img");
+        let slideIndex = 0;
+        let IntervalId =  null;
+
+        document.addEventListener("DOMContentLoaded",initImage);
+        // initImage();
+        function initImage(){
+            if(imgs.length > 0){
+                imgs[slideIndex].classList.add("showImg"); 
+                // IntervalId = setInterval(nextSlide,3000)          
+            }
+        }
+        function displayImage(index){
+            if(index >= imgs.length){
+                slideIndex = 0;
+            }
+            else if(index < 0){
+                slideIndex = imgs.length -1 ;
+            }
+
+            imgs.forEach(slide => {
+                slide.classList.remove("showImg");
+            });
+            imgs[slideIndex].classList.add("showImg");
+        }
+        function nextSlide(){
+            slideIndex ++;
+            // if(slideIndex >= imgs.length){
+            //     slideIndex = 0;
+            // }
+            displayImage(slideIndex);
+        }
+        function prevSlide(){
+            // clearInterval(IntervalId);
+            slideIndex --;
+            // if(slideIndex < 0){
+            //     slideIndex = imgs.length - 1;
+            // }
+            displayImage(slideIndex);
+        }
+
+    </script>
+</body>
+</html>

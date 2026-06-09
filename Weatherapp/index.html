@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+body{
+    margin: 0;
+}
+.weatherapp{
+    text-align: center;
+    margin: 20px;
+}
+.weatherform{
+    margin: 20px;
+}
+.input{
+    font-size: 2rem;
+    padding: 5px;
+}
+button[type="submit"]{
+    font-size: 2rem;
+    padding: 5px;
+}
+.card{
+    display: flex;
+    border: 2px solid rgba(0, 0, 0, 0.4);
+    width: 50%;
+    margin: auto;
+    align-items: center;
+    background:linear-gradient(rgb(154, 154, 255),rgb(255, 206, 114));
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+}
+.city,.temp{
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: rgba(0, 0, 0, 0.8);
+}
+.humidity{
+    font-size: 2rem;
+    color: rgba(0, 0, 0, 0.9);
+}
+.status,.emoji,.message{
+    font-size: 2rem;
+}
+
+</style>
+<body>
+
+    <div class="weatherapp">
+        <form class="weatherform">
+            <input type="text" class="input" placeholder="Enter a city">
+            <button type="submit">Get Weather</button>            
+        </form>
+        <div class="card" style="display: none;">
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <script>
+        const weatherform = document.querySelector(".weatherform");
+        const input = document.querySelector(".input");
+        const card = document.querySelector(".card");
+        const apiKey = '45b305d2ba05d67c73aa40abc0753494';
+
+        weatherform.addEventListener("submit",async (event)=> {
+            event.preventDefault();
+            const city = input.value;
+
+            if(city){
+                try{
+                    const weatherData =await getWeatherData(city);
+                    displayWeather(weatherData);
+                }
+                catch(error){
+                    console.log(error);
+                    displayError(error);
+                }
+
+            }
+            else{
+                displayError('Plaese enter a city!');
+            }
+        })
+
+        async function getWeatherData(city){
+
+            const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+
+            const response = await fetch(apiUrl);
+            if(!response.ok){
+                throw new Error('404 Not Found!')
+                displayError(error);
+            }
+            return await response.json();
+        }
+
+        function displayWeather(data){
+            const {name: city,main:{temp,humidity},weather:[{description,id}]} = data;
+
+            const displayCity = document.createElement("h1");
+            const displayTemp = document.createElement("h2");
+            const displayHumidity = document.createElement("p");
+            const displayStatus = document.createElement("p");
+            const displayEmojis = document.createElement("p");
+
+            displayCity.textContent = city;
+            displayTemp.textContent = (temp - 271.15).toFixed(1) + "ºC";
+            displayHumidity.textContent = `Humidity: ${humidity}%`;
+            displayStatus.textContent = description;
+            displayEmojis.textContent = displayEmoji(id);
+
+
+            displayCity.classList.add("city");
+            displayTemp.classList.add("temp");
+            displayHumidity.classList.add("humidity");
+            displayStatus.classList.add("status");
+            displayEmojis.classList.add("emoji");
+
+            card.textContent ="";
+            card.style.display = "block";
+            card.appendChild(displayCity);
+            card.appendChild(displayTemp);
+            card.appendChild(displayHumidity);
+            card.appendChild(displayStatus);
+            card.appendChild(displayEmojis);
+
+
+
+        }
+
+        function displayEmoji(id){
+            const weatherId = id;
+            switch(true){
+                case (weatherId >= 200 && weatherId < 300):
+                return '⛈️';
+                case (weatherId >= 300 && weatherId < 400):
+                return '🌧️';
+                case (weatherId >= 500 && weatherId < 600):
+                return '🌦️';
+                case (weatherId >= 600 && weatherId < 700):
+                return '🌨️';
+                case (weatherId >= 700 && weatherId < 800):
+                return '🌪️';
+                case (weatherId === 800):
+                return '☀️';
+                case (weatherId >= 801 && weatherId < 810):
+                return '💭';
+                default : return '❔' 
+            }
+
+        }
+
+        function displayError(message){
+            const error = document.createElement("p");
+            error.textContent = message;
+            error.classList.add("message");
+
+            card.textContent = "";
+            card.style.display = "block";
+            card.appendChild(error);
+
+
+        }
+    </script>
+</body>
+</html>

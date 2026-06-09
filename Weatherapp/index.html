@@ -87,18 +87,17 @@ button[type="submit"]{
 
             }
             else{
-                displayError('Plaese enter a city!');
+                displayError('Please enter a city!');
             }
         })
 
         async function getWeatherData(city){
 
-            const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+            const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
             const response = await fetch(apiUrl);
             if(!response.ok){
-                throw new Error('404 Not Found!')
-                displayError(error);
+                throw new Error(`City "${city}" not found`);
             }
             return await response.json();
         }
@@ -113,7 +112,7 @@ button[type="submit"]{
             const displayEmojis = document.createElement("p");
 
             displayCity.textContent = city;
-            displayTemp.textContent = (temp - 271.15).toFixed(1) + "ºC";
+            displayTemp.textContent = `${temp.toFixed(1)}°C`;
             displayHumidity.textContent = `Humidity: ${humidity}%`;
             displayStatus.textContent = description;
             displayEmojis.textContent = displayEmoji(id);
@@ -126,7 +125,8 @@ button[type="submit"]{
             displayEmojis.classList.add("emoji");
 
             card.textContent ="";
-            card.style.display = "block";
+            card.style.display = "flex";
+            card.style.flexDirection = "column";
             card.appendChild(displayCity);
             card.appendChild(displayTemp);
             card.appendChild(displayHumidity);
@@ -165,7 +165,8 @@ button[type="submit"]{
             error.classList.add("message");
 
             card.textContent = "";
-            card.style.display = "block";
+            card.style.display = "flex";
+card.style.flexDirection = "column";
             card.appendChild(error);
 
 
